@@ -8,25 +8,26 @@ namespace WebUniversidade
 {
     public class ListaPaginada<T> : List<T>
     {
+        public int IndicePagina { get; private set; }
+        public int TotalPaginas { get; private set; }
+
         public ListaPaginada(List<T> itens, int cont, int indicePagina, int tamanhoPagina)
         {
             IndicePagina = indicePagina;
             TotalPaginas = (int)Math.Ceiling(cont / (double)tamanhoPagina);
 
-            AddRange(itens);
+            this.AddRange(itens);
         }
 
-        public int IndicePagina { get; private set; }
-        public int TotalPaginas { get; private set; }
 
-        public bool PaginaAnterior
+        public bool HasPreviousPage
         {
-            get { return IndicePagina > 1; }
+            get { return (IndicePagina > 1); }
         }
 
-        public bool ProximaPagina
+        public bool HasNextPage
         {
-            get { return IndicePagina < TotalPaginas; }
+            get { return (IndicePagina < TotalPaginas); }
         }
 
         public static async Task<ListaPaginada<T>> CriarAsync(IQueryable<T> fonte, int indicePagina, int tamanhoPagina)

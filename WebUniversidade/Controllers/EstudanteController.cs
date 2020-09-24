@@ -17,11 +17,22 @@ namespace WebUniversidade.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string sortOrder, string searchString)
+        public async Task<IActionResult> Index(string sortOrder, string searchString, int? pageNumber, string currentFilter)
         {
 
+            ViewData["Sort"] = sortOrder;
             ViewData["ParametroNome"] = string.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
             ViewData["ParametroData"] = sortOrder == "Data" ? "data_desc" : "Data";
+
+            if (searchString != null)
+            {
+                pageNumber = 1;
+            }
+            else
+            {
+                searchString = currentFilter;
+            }
+
             ViewData["Filtro"] = searchString;
 
             var estudantes = Contexto.Estudantes.Select(e => e);
@@ -38,7 +49,10 @@ namespace WebUniversidade.Controllers
                 "data_desc" => estudantes.OrderByDescending(d => d.EnrollmentDate),
                 _ => estudantes.OrderBy(e => e.Nome),
             };
-            return View(await estudantes.AsNoTracking().ToListAsync());
+
+            int tamanhoPagina = 4;
+
+            return View(await ListaPaginada<Estudante>.CriarAsync( estudantes.AsNoTracking(), pageNumber ?? 1, tamanhoPagina));
         }
 
         [HttpGet]
