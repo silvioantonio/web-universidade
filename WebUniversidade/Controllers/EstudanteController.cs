@@ -1,8 +1,5 @@
-﻿using Microsoft.AspNetCore.Components.Forms;
-using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUniversidade.Data;
@@ -20,9 +17,31 @@ namespace WebUniversidade.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(string sortOrder)
         {
-            return View(await Contexto.Estudantes.ToListAsync());
+
+            ViewData["ParametroNome"] = string.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
+            ViewData["ParametroData"] = sortOrder == "Data" ? "data_desc" : "Data";
+
+            var estudantes = Contexto.Estudantes.Select(e => e);
+
+            switch (sortOrder)
+            {
+                case "nome_desc":
+                    estudantes = estudantes.OrderByDescending(e => e.Nome);
+                    break;
+                case "Data":
+                    estudantes = estudantes.OrderBy(d => d.EnrollmentDate);
+                    break;
+                case "data_desc":
+                    estudantes = estudantes.OrderByDescending(d => d.EnrollmentDate);
+                    break;
+                default:
+                    estudantes = estudantes.OrderBy(e => e.Nome);
+                    break;
+            }
+
+            return View(await estudantes.AsNoTracking().ToListAsync());
         }
 
         [HttpGet]
