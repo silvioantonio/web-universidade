@@ -85,6 +85,46 @@ namespace WebUniversidade.Controllers
         }
 
         [HttpGet]
+        [Route("Deletar/{id:int}")]
+        public async Task<IActionResult> Deletar(int? id, bool? errosSalvos = false )
+        {
+            if (id == null)
+                return NotFound("Id do estudante não encontrado!!!");
+
+            var estudante = await Contexto.Estudantes.AsNoTracking().FirstOrDefaultAsync( e => e.Id == id);
+
+            if (estudante == null)
+            {
+                return NotFound("Estudante nao encontrado!!");
+            }
+
+            if (errosSalvos.GetValueOrDefault())
+            {
+                ViewData["ErrorMessage"] = "Falha a tentar deletar o estudante!";
+            }
+
+            return View(estudante);
+        }
+
+        [HttpPost]
+        [Route("Deletar/{id:int}")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deletar(int id)
+        {
+            try
+            {
+                var estudante = new Estudante() { Id = id };
+                Contexto.Entry(estudante).State = EntityState.Deleted;
+                await Contexto.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateException e)
+            {
+                return RedirectToAction(nameof(Deletar), new { id = id, saveChangesError = true });
+            }
+        }
+
+        [HttpGet]
         public IActionResult Criar()
         {
             return View();
