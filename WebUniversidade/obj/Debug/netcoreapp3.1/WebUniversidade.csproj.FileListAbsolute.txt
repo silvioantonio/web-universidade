@@ -169,3 +169,4 @@ C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\bin\Debug\ne
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\WebUniversidade.csproj.CoreCompileInputs.cache
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\WebUniversidade.MvcApplicationPartsAssemblyInfo.cache
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Estudante\Index.cshtml.g.cs
+C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Estudante\Detalhes.cshtml.g.cs
