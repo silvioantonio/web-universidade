@@ -12,9 +12,10 @@ namespace WebUniversidade.Data
         public static void Inicializador(Contexto contexto)
         {
             contexto.Database.EnsureCreated();
-
+            Console.Write("Entrou");
             if (contexto.Estudantes.Any())
             {
+                Console.WriteLine("Saiu");
                 return; // O banco esta populado
             }
 
@@ -33,7 +34,7 @@ namespace WebUniversidade.Data
             {
                 contexto.Estudantes.Add(estudante);
             }
-
+            contexto.SaveChanges();
 
             var cursos = new Curso[]
             {
@@ -48,7 +49,7 @@ namespace WebUniversidade.Data
             {
                 contexto.Cursos.Add(curso);
             }
-
+            contexto.SaveChanges();
 
             var cursoEstudante = new CursoEstudante[]
             {

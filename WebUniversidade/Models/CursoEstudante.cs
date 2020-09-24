@@ -1,4 +1,6 @@
-﻿namespace WebUniversidade.Models
+﻿using System.ComponentModel.DataAnnotations.Schema;
+
+namespace WebUniversidade.Models
 {
     public class CursoEstudante
     {

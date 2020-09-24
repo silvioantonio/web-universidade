@@ -18,6 +18,7 @@ namespace WebUniversidade.Data
         {
             modelBuilder.Entity<Curso>().ToTable("Curso");
             modelBuilder.Entity<CursoEstudante>().ToTable("CursoEstudante");
+            modelBuilder.Entity<CursoEstudante>().HasKey(ce => new { ce.CursoID, ce.EstudanteId });
             modelBuilder.Entity<Estudante>().ToTable("Estudante");
         }
 
