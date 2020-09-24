@@ -17,30 +17,27 @@ namespace WebUniversidade.Controllers
         }
 
         [HttpGet]
-        public async Task<IActionResult> Index(string sortOrder)
+        public async Task<IActionResult> Index(string sortOrder, string searchString)
         {
 
             ViewData["ParametroNome"] = string.IsNullOrEmpty(sortOrder) ? "nome_desc" : "";
             ViewData["ParametroData"] = sortOrder == "Data" ? "data_desc" : "Data";
+            ViewData["Filtro"] = searchString;
 
             var estudantes = Contexto.Estudantes.Select(e => e);
 
-            switch (sortOrder)
+            if (!string.IsNullOrEmpty(searchString))
             {
-                case "nome_desc":
-                    estudantes = estudantes.OrderByDescending(e => e.Nome);
-                    break;
-                case "Data":
-                    estudantes = estudantes.OrderBy(d => d.EnrollmentDate);
-                    break;
-                case "data_desc":
-                    estudantes = estudantes.OrderByDescending(d => d.EnrollmentDate);
-                    break;
-                default:
-                    estudantes = estudantes.OrderBy(e => e.Nome);
-                    break;
+                estudantes = estudantes.Where(e => e.Nome.Contains(searchString) || e.Sobrenome.Contains(searchString));
             }
 
+            estudantes = sortOrder switch
+            {
+                "nome_desc" => estudantes.OrderByDescending(e => e.Nome),
+                "Data" => estudantes.OrderBy(d => d.EnrollmentDate),
+                "data_desc" => estudantes.OrderByDescending(d => d.EnrollmentDate),
+                _ => estudantes.OrderBy(e => e.Nome),
+            };
             return View(await estudantes.AsNoTracking().ToListAsync());
         }
 
