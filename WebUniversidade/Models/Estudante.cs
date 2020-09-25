@@ -7,7 +7,11 @@ namespace WebUniversidade.Models
     public class Estudante
     {
         public int Id { get; set; }
+
+        [StringLength(50)]
         public string Nome { get; set; }
+
+        [StringLength(50)]
         public string Sobrenome { get; set; }
 
         [DataType(DataType.Date)]
