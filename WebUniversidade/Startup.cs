@@ -20,6 +20,7 @@ namespace WebUniversidade
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddDbContext<Contexto>(options => options.UseSqlServer(Configuration.GetConnectionString("DefaultConnection")));
+            
             services.AddMvc();
         }
 

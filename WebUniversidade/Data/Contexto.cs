@@ -13,10 +13,10 @@ namespace WebUniversidade.Data
         public DbSet<Curso> Cursos { get; set; }
         public DbSet<CursoEstudante> CursoEstudantes { get; set; }
         public DbSet<Estudante> Estudantes { get; set; }
-        public DbSet<Departamento> Departamento { get; set; }
-        public DbSet<Instrutor> Instrutor { get; set; }
-        public DbSet<CursoInstrutor> CursoInstrutor { get; set; }
-        public DbSet<Escritorio> Escritorio { get; set; }
+        public DbSet<Departamento> Departamentos { get; set; }
+        public DbSet<Instrutor> Instrutores { get; set; }
+        public DbSet<CursoInstrutor> CursoInstrutores { get; set; }
+        public DbSet<Escritorio> Escritorios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

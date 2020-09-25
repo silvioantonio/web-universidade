@@ -1,0 +1,55 @@
+﻿
+@model IEnumerable<WebUniversidade.Models.Curso>
+
+@{
+    ViewData["Title"] = "Cursos";
+}
+
+<h2>Courses</h2>
+
+<p>
+    <a asp-action="Criar">Novo Curso</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.CursoId)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Titulo)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Creditos)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Departamento)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.CursoId)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Titulo)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Creditos)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.Departamento.Nome)
+                </td>
+                <td>
+                    <a asp-action="Editar" asp-route-id="@item.CursoId">Editar</a> |
+                    <a asp-action="Detalhes" asp-route-id="@item.CursoId">Detalhes</a> |
+                    <a asp-action="Deletar" asp-route-id="@item.CursoId">Delete</a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>

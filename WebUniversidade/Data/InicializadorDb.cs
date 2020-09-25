@@ -52,24 +52,11 @@ namespace WebUniversidade.Data
 
             foreach (Instrutor i in instrutores)
             {
-                contexto.Instrutor.Add(i);
+                contexto.Instrutores.Add(i);
             }
             contexto.SaveChanges();
 
-            var cursos = new Curso[]
-            {
-                new Curso{CursoId=1001, Titulo="Logica de Programação 1", Creditos=2},
-                new Curso{CursoId=1002, Titulo="Desenvolvimento Pessoal", Creditos=1},
-                new Curso{CursoId=1003, Titulo="Matematica 2", Creditos=4},
-                new Curso{CursoId=1004, Titulo="Fisica 1", Creditos=3},
-                new Curso{CursoId=1005, Titulo="Desenvolvimento de Software 1", Creditos=3},
-                new Curso{CursoId=1006, Titulo="Java para iniciantes", Creditos=3},
-            };
-            foreach (var curso in cursos)
-            {
-                contexto.Cursos.Add(curso);
-            }
-            contexto.SaveChanges();
+       
 
             var departments = new Departamento[]
             {
@@ -81,7 +68,7 @@ namespace WebUniversidade.Data
 
             foreach (Departamento d in departments)
             {
-                contexto.Departamento.Add(d);
+                contexto.Departamentos.Add(d);
             }
             contexto.SaveChanges();
 
@@ -131,7 +118,7 @@ namespace WebUniversidade.Data
 
             foreach (Escritorio o in officeAssignments)
             {
-                contexto.Escritorio.Add(o);
+                contexto.Escritorios.Add(o);
             }
             contexto.SaveChanges();
 
@@ -173,7 +160,7 @@ namespace WebUniversidade.Data
 
             foreach (CursoInstrutor ci in courseInstructors)
             {
-                contexto.CursoInstrutor.Add(ci);
+                contexto.CursoInstrutores.Add(ci);
             }
             contexto.SaveChanges();
 
