@@ -14,6 +14,7 @@ namespace WebUniversidade.Models
         public string Nome { get; set; }
 
         [DataType(DataType.Currency)]
+        [Column(TypeName = "money")]
         public decimal Orcamento { get; set; }
 
         [DataType(DataType.Date)]
