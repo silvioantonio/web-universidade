@@ -4,18 +4,23 @@ using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using WebUniversidade.Data;
 using WebUniversidade.Models;
+using WebUniversidade.Models.EscolaViewModels;
 
 namespace WebUniversidade.Controllers
 {
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
+        private readonly Contexto _contexto;
 
-        public HomeController(ILogger<HomeController> logger)
+        public HomeController(ILogger<HomeController> logger, Contexto contexto)
         {
             _logger = logger;
+            _contexto = contexto;
         }
 
         public IActionResult Index()
@@ -33,5 +38,17 @@ namespace WebUniversidade.Controllers
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
+
+        public async Task<ActionResult> Sobre()
+        {
+            var data = from student in _contexto.Estudantes group student by student.EnrollmentDate into dateGroup
+                select new GrupoDataEntrada()
+                {
+                    DataEntrada = dateGroup.Key,
+                    EstudanteCount = dateGroup.Count()
+                };
+            return View(await data.AsNoTracking().ToListAsync());
+        }
+
     }
 }
