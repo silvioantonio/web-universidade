@@ -181,3 +181,4 @@ C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\ne
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Curso\Deletar.cshtml.g.cs
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Curso\Detalhes.cshtml.g.cs
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Curso\Editar.cshtml.g.cs
+C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Instrutor\Editar.cshtml.g.cs

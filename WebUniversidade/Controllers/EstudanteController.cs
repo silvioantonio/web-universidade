@@ -148,9 +148,9 @@ namespace WebUniversidade.Controllers
                 await Contexto.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            catch (DbUpdateException e)
+            catch (DbUpdateException )
             {
-                return RedirectToAction(nameof(Deletar), new { id = id, saveChangesError = true });
+                return RedirectToAction(nameof(Deletar), new { id, saveChangesError = true });
             }
         }
 
@@ -173,7 +173,7 @@ namespace WebUniversidade.Controllers
                     return RedirectToAction(nameof(Index));
                 }
             }
-            catch (DbUpdateException db)
+            catch (DbUpdateException )
             {
                 ModelState.AddModelError("", "Não foi possivel salvar os dados, Tente novamente");
             }
