@@ -1,0 +1,14 @@
+﻿
+@model WebUniversidade.Models.Curso
+
+@{
+    ViewData["Title"] = "Cursos";
+}
+
+<div class="form-group">
+    <label asp-for="Departamento" class="control-label"></label>
+    <select asp-for="DepartmentID" class="form-control" asp-items="ViewBag.DepartamentoId">
+        <option value="">-- Selecione o Departamento --</option>
+    </select>
+    <span asp-validation-for="DepartmentID" class="text-danger"></span>
+</div>

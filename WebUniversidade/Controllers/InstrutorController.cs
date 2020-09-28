@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using WebUniversidade.Data;
+using WebUniversidade.Models;
 using WebUniversidade.Models.EscolaViewModels;
 
 namespace WebUniversidade.Controllers
@@ -21,21 +22,16 @@ namespace WebUniversidade.Controllers
         [HttpGet]
         public async Task<IActionResult> Index(int? id, int? cursoID)
         {
-            var viewModel = new InstrutorIndexData
-            {
-                Instrutores = await Contexto.Instrutores
-                .Include(i => i.Escritorio)
-                .Include(i => i.CursoInstrutores)
-                    .ThenInclude(i => i.Curso)
-                        .ThenInclude(i => i.CursoEstudantes)
-                            .ThenInclude(i => i.Estudante)
-                .Include(i => i.CursoInstrutores)
-                    .ThenInclude(i => i.Curso)
-                        .ThenInclude(i => i.Departamento)
-                .OrderBy(i => i.Sobrenome)
-                .ToListAsync()
-            };
+            var viewModel = new InstrutorIndexData();
 
+            viewModel.Instrutores = await Contexto.Instrutores
+                                                    .Include(i => i.Escritorio)
+                                                    .Include(i => i.CursoInstrutores)
+                                                        .ThenInclude(i => i.Curso)
+                                                            .ThenInclude(i => i.Departamento)
+                                                    .OrderBy(i => i.Sobrenome)
+                                                    .ToListAsync();
+            
 
             if (id != null)
             {
@@ -47,6 +43,15 @@ namespace WebUniversidade.Controllers
             if (cursoID != null)
             {
                 ViewData["CursoId"] = cursoID.Value;
+
+                var cursoSelecionad = viewModel.Cursos.Where(x => x.CursoId == cursoID).Single();
+                await Contexto.Entry(cursoSelecionad).Collection(x => x.CursoEstudantes).LoadAsync();
+                foreach (CursoEstudante enrollment in cursoSelecionad.CursoEstudantes)
+                {
+                    await Contexto.Entry(enrollment).Reference(x => x.Estudante).LoadAsync();
+                }
+                viewModel.CursoEstudantes = cursoSelecionad.CursoEstudantes;
+
                 viewModel.CursoEstudantes = viewModel.Cursos.Where(x => x.CursoId == cursoID).SingleOrDefault().CursoEstudantes;
             }
             return View(viewModel);
