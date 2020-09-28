@@ -22,6 +22,9 @@ namespace WebUniversidade.Models
         [Display(Name = "Data Inicio")]
         public DateTime DataInicio { get; set; }
 
+        [Timestamp]
+        public byte[] RowVersion { get; set; }
+
         public int? InstrutorId { get; set; }
         public Instrutor Administrador { get; set; }
         public ICollection<Curso> Cursos { get; set; }

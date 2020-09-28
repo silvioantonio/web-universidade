@@ -125,17 +125,42 @@ namespace WebUniversidade.Controllers
 
         public IActionResult Criar()
         {
-            var instrutor = new Instrutor();
-            instrutor.CursoInstrutores = new List<CursoInstrutor>();
+            var instrutor = new Instrutor
+            {
+                CursoInstrutores = new List<CursoInstrutor>()
+            };
             DataAssinaturaCurso(instrutor);
             return View();
         }
 
-        [HttpDelete]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Criar([Bind("Nome, Sobrenome, DataContratacao, CursoInstrutores")] Instrutor instrutor, string[] cursosSelecionados)
+        {
+            if(cursosSelecionados != null)
+            {
+                instrutor.CursoInstrutores = new List<CursoInstrutor>();
+                foreach (var curso in cursosSelecionados)
+                {
+                    var cursoAdicionar = new CursoInstrutor { InstrutorId = instrutor.Id, CursoId = int.Parse(curso) };
+                    instrutor.CursoInstrutores.Add(cursoAdicionar);
+                }
+            }
+            if (ModelState.IsValid)
+            {
+                Contexto.Add(instrutor);
+                await Contexto.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+            DataAssinaturaCurso(instrutor);
+            return View(instrutor);
+        }
+
+        [HttpPost]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Deletar(int id)
         {
-            var instrutor = await Contexto.Instrutores.Include(i => i.CursoInstrutores).SingleAsync();
+            var instrutor = await Contexto.Instrutores.Include(i => i.CursoInstrutores).SingleAsync(i => i.Id == id);
             var departamentos = await Contexto.Departamentos.Where(d => d.InstrutorId == id).ToListAsync();
 
             departamentos.ForEach(d => d.InstrutorId = null);
@@ -145,6 +170,36 @@ namespace WebUniversidade.Controllers
             await Contexto.SaveChangesAsync();
 
             return RedirectToAction(nameof(Index));
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Deletar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var instrutor = await Contexto.Instrutores.FirstOrDefaultAsync(x => x.Id == id);
+            if (instrutor == null)
+            {
+                return NotFound();
+            }
+            return View(instrutor);
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> Detalhes(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+            var instrutor = await Contexto.Instrutores.FirstOrDefaultAsync(x => x.Id == id);
+            if (instrutor == null)
+            {
+                return NotFound();
+            }
+            return View(instrutor);
         }
 
         private void AtualizarCursosInstrutor(string[] cursosSelecionados, Instrutor instrutorAtualizado)
