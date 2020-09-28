@@ -57,5 +57,55 @@ namespace WebUniversidade.Controllers
             return View(viewModel);
         }
 
+        public async Task<IActionResult> Editar(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var instrutor = await Contexto.Instrutores.Include(i => i.Escritorio).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+            if (instrutor == null)
+            {
+                return NotFound();
+            }
+
+            return View(instrutor);
+
+        }
+
+        [HttpPost, ActionName("Editar")]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> EditarPost(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var instrutorAtualizado = await Contexto.Instrutores.Include(i => i.Escritorio).AsNoTracking().FirstOrDefaultAsync(x => x.Id == id);
+
+            if (await TryUpdateModelAsync<Instrutor>(instrutorAtualizado, "", i => i.Nome, i => i.Sobrenome, i => i.DataContratacao, i => i.Escritorio))
+            {
+                if (String.IsNullOrWhiteSpace(instrutorAtualizado.Escritorio?.Localizacao))
+                {
+                    instrutorAtualizado.Escritorio = null;
+                }
+                try
+                {
+                    await Contexto.SaveChangesAsync();
+                }
+                catch (DbUpdateException)
+                {
+                    ModelState.AddModelError("", "Erro ao tentar atualizar");
+                }
+                return RedirectToAction(nameof(Index));
+            }
+
+            return View(instrutorAtualizado);
+
+        }
+
     }
 }

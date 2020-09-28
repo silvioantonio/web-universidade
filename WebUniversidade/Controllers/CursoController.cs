@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -133,24 +134,11 @@ namespace WebUniversidade.Controllers
 
         private void DepartamentosPopulares(object departamentoSelecionado = null)
         {
-            var departamentosQuery = from d in Contexto.Departamentos orderby d.Nome select d;
-            ViewBag.DepartamentoId = new ListaSelecionada(departamentosQuery.AsNoTracking(), "DepartamentoId", "Nome", departamentoSelecionado);
+            //var departamentosQuery = from d in Contexto.Departamentos orderby d.Nome select d;
+            var departamentosQuery = Contexto.Departamentos.OrderBy(x => x.Nome);
+
+            ViewBag.DepartamentoID = new SelectList(departamentosQuery.AsNoTracking(), "DepartamentoId", "Nome", departamentoSelecionado);
         }
     }
 
-    internal class ListaSelecionada
-    {
-        private IQueryable<Departamento> queryables;
-        private string v1;
-        private string v2;
-        private object departamentoSelecionado;
-
-        public ListaSelecionada(IQueryable<Departamento> queryables, string v1, string v2, object departamentoSelecionado)
-        {
-            this.queryables = queryables;
-            this.v1 = v1;
-            this.v2 = v2;
-            this.departamentoSelecionado = departamentoSelecionado;
-        }
-    }
 }
