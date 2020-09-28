@@ -123,6 +123,14 @@ namespace WebUniversidade.Controllers
 
         }
 
+        public IActionResult Criar()
+        {
+            var instrutor = new Instrutor();
+            instrutor.CursoInstrutores = new List<CursoInstrutor>();
+            DataAssinaturaCurso(instrutor);
+            return View();
+        }
+
         [HttpDelete]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Deletar(int id)
