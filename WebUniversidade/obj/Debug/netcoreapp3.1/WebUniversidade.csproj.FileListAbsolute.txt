@@ -185,3 +185,5 @@ C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\ne
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Instrutor\Criar.cshtml.g.cs
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Instrutor\Deletar.cshtml.g.cs
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Instrutor\Detalhes.cshtml.g.cs
+C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Departamento\Editar.cshtml.g.cs
+C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Departamento\Index.cshtml.g.cs

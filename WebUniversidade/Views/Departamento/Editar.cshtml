@@ -1,0 +1,53 @@
+﻿
+@model WebUniversidade.Models.Departamento
+
+@{
+    ViewData["Title"] = "Editar";
+}
+
+<h2>Editar Departamento</h2>
+
+
+<hr />
+<div class="row">
+    <div class="col-md-4">
+        <form asp-action="Editar">
+            <div asp-validation-summary="ModelOnly" class="text-danger"></div>
+            <input type="hidden" asp-for="DepartamentoId" />
+            <input type="hidden" asp-for="RowVersion" />
+            <div class="form-group">
+                <label asp-for="Nome" class="control-label"></label>
+                <input asp-for="Nome" class="form-control" />
+                <span asp-validation-for="Nome" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="Orcamento" class="control-label"></label>
+                <input asp-for="Orcamento" class="form-control" />
+                <span asp-validation-for="Orcamento" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="DataInicio" class="control-label"></label>
+                <input asp-for="DataInicio" class="form-control" />
+                <span asp-validation-for="DataInicio" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="InstrutorId" class="control-label"></label>
+                <select asp-for="InstrutorId" class="form-control" asp-items="ViewBag.InstrutorId">
+                    <option value="">-- Selecionar Administrador --</option>
+                </select>
+                <span asp-validation-for="InstrutorId" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <input type="submit" value="Savar" class="btn btn-info" />
+            </div>
+        </form>
+    </div>
+</div>
+
+<div>
+    <a asp-action="Index" class="btn btn-primary">Voltar</a>
+</div>
+
+@section Scripts {
+    @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
+}
