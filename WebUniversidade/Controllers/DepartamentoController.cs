@@ -27,6 +27,45 @@ namespace WebUniversidade.Controllers
             return View(await departamentos.ToListAsync());
         }
 
+        public async Task<IActionResult> Detalhes(int? id)
+        {
+            if (id == null)
+            {
+                return NotFound(new { message = "Codigo nao encontrado!!" });
+            }
+
+            var departamento = await Contexto.Departamentos.AsNoTracking().FirstOrDefaultAsync(x => x.DepartamentoId == id);
+
+            if (departamento == null)
+            {
+                return NotFound(new { message = "Departamento nao encontrado!!" });
+            }
+            return View(departamento);
+
+        }
+
+        public IActionResult Criar()
+        {
+
+            ViewData["InstrutorId"] = new SelectList(Contexto.Instrutores, "Id", "NomeCompleto");
+            return View();
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Criar([Bind("DepartamentoId, Nome, Orcamento, DataInicio, InstrutorId, RowVersion")] Departamento departamento)
+        {
+            if (ModelState.IsValid)
+            {
+                Contexto.Add(departamento);
+                await Contexto.SaveChangesAsync();
+                return RedirectToAction(nameof(Index));
+            }
+
+            ViewData["InstrutorId"] = new SelectList(Contexto.Instrutores, "Id", "NomeCompleto", departamento.InstrutorId);
+            return View(departamento);
+        }
+
         public async Task<IActionResult> Editar(int? id)
         {
             if (id == null)
@@ -122,6 +161,50 @@ namespace WebUniversidade.Controllers
             ViewData["InstrutorId"] = new SelectList(Contexto.Instrutores, "Id", "NomeCompleto", departamentoAtualizado.InstrutorId);
 
             return View(departamentoAtualizado);
+        }
+
+        public async Task<IActionResult> Deletar(int? id, bool? concurrencyError)
+        {
+            if (id == null)
+            {
+                return NotFound();
+            }
+
+            var departamento = await Contexto.Departamentos.Include(d => d.Administrador).AsNoTracking().FirstOrDefaultAsync(x => x.DepartamentoId == id);
+
+            if (departamento == null)
+            {
+                if (concurrencyError.GetValueOrDefault())
+                {
+                    return RedirectToAction(nameof(Index));
+                }
+                return NotFound();
+            }
+
+            if (concurrencyError.GetValueOrDefault())
+            {
+                ViewData["ConcurrencyErrorMessage"] = "O dado que voce tentou deletar foi modificado por outro usuario apos voce selecionar os dados originais";
+            }
+            return View(departamento);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Deletar(Departamento departamento)
+        {
+            try
+            {
+                if (await Contexto.Departamentos.AnyAsync(x => x.DepartamentoId == departamento.DepartamentoId))
+                {
+                    Contexto.Departamentos.Remove(departamento);
+                    await Contexto.SaveChangesAsync();
+                }
+                return RedirectToAction(nameof(Index));
+            }
+            catch (DbUpdateConcurrencyException)
+            {
+                return RedirectToAction(nameof(Deletar), new { concurrencyError = true, id = departamento.DepartamentoId });
+            }
         }
 
     }
