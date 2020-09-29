@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Data.Common;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -41,13 +41,42 @@ namespace WebUniversidade.Controllers
 
         public async Task<ActionResult> Sobre()
         {
-            var data = from student in _contexto.Estudantes group student by student.EnrollmentDate into dateGroup
-                select new GrupoDataEntrada()
+
+            List<GrupoDataEntrada> grupos = new List<GrupoDataEntrada>();
+            var connection = _contexto.Database.GetDbConnection();
+
+            try
+            {
+                await connection.OpenAsync();
+                using (var comando = connection.CreateCommand())
                 {
-                    DataEntrada = dateGroup.Key,
-                    EstudanteCount = dateGroup.Count()
-                };
-            return View(await data.AsNoTracking().ToListAsync());
+                    string query = "SELECT DataEntrada, COUNT(*) AS EstudanteCount " +
+                        "FROM Estudante " +
+                        "GROUP BY DataEntrada ";
+
+                    comando.CommandText = query;
+                    DbDataReader dbDataReader = await comando.ExecuteReaderAsync();
+
+                    if (dbDataReader.HasRows)
+                    {
+                        while (await dbDataReader.ReadAsync())
+                        {
+                            var row = new GrupoDataEntrada { DataEntrada = dbDataReader.GetDateTime(0), EstudanteCount = dbDataReader.GetInt32(1) };
+                            grupos.Add(row);
+                        }
+                    }
+
+                    dbDataReader.Dispose();
+
+                }
+            }
+            finally
+            {
+
+                connection.Close();
+            }
+
+            return View(grupos);
         }
 
     }
