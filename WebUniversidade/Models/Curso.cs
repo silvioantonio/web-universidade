@@ -16,7 +16,7 @@ namespace WebUniversidade.Models
 
         [Range(0, 5)]
         public int Creditos { get; set; }
-        public int DepartmentID { get; set; }
+        public int DepartamentoId { get; set; }
         public Departamento Departamento { get; set; }
         public ICollection<CursoEstudante> CursoEstudantes { get; set; }
         public ICollection<CursoInstrutor> CursoInstrutores { get; set; }

@@ -190,3 +190,4 @@ C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\ne
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Departamento\Deletar.cshtml.g.cs
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Departamento\Detalhes.cshtml.g.cs
 C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Departamento\Criar.cshtml.g.cs
+C:\Users\silvio.junior\source\repos\WebUniversidade\WebUniversidade\obj\Debug\netcoreapp3.1\Razor\Views\Curso\AtualizarCreditosCurso.cshtml.g.cs

@@ -17,6 +17,22 @@ namespace WebUniversidade.Controllers
             this.Contexto = contexto;
         }
 
+        public IActionResult AtualizarCreditosCurso()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> AtualizarCreditosCurso(int? multiplo)
+        {
+            if (multiplo != null)
+            {
+                ViewData["RowsAffected"] = await Contexto.Database.ExecuteSqlCommandAsync("UPDATE Curso SET Creditos = Creditos * {0}",
+                    parameters: multiplo);
+            }
+            return View();
+        }
+
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -42,7 +58,7 @@ namespace WebUniversidade.Controllers
                 await Contexto.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            DepartamentosPopulares(curso.DepartmentID);
+            DepartamentosPopulares(curso.DepartamentoId);
             return View(curso);
         }
 
@@ -60,7 +76,7 @@ namespace WebUniversidade.Controllers
                 return NotFound(new { message = "Codigo nao encontrado!!" });
             }
 
-            DepartamentosPopulares(curso.DepartmentID);
+            DepartamentosPopulares(curso.DepartamentoId);
 
             return View(curso);
 
@@ -90,7 +106,7 @@ namespace WebUniversidade.Controllers
                 return RedirectToAction(nameof(Index));
             }
            
-            DepartamentosPopulares(cursoAtualizado.DepartmentID);
+            DepartamentosPopulares(cursoAtualizado.DepartamentoId);
             return View(cursoAtualizado);
 
         }

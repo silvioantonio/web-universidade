@@ -75,25 +75,25 @@ namespace WebUniversidade.Data
             var courses = new Curso[]
             {
                 new Curso {CursoId = 1050, Titulo = "Chemistry", Creditos = 3,
-                    DepartmentID = departments.Single( s => s.Nome == "Engineering").DepartamentoId
+                    DepartamentoId = departments.Single( s => s.Nome == "Engineering").DepartamentoId
                 },
                 new Curso {CursoId = 4022, Titulo = "Microeconomics", Creditos = 3,
-                    DepartmentID = departments.Single( s => s.Nome == "Economics").DepartamentoId
+                    DepartamentoId = departments.Single( s => s.Nome == "Economics").DepartamentoId
                 },
                 new Curso {CursoId = 4041, Titulo = "Macroeconomics", Creditos = 3,
-                    DepartmentID = departments.Single( s => s.Nome == "Economics").DepartamentoId
+                    DepartamentoId = departments.Single( s => s.Nome == "Economics").DepartamentoId
                 },
                 new Curso {CursoId = 1045, Titulo = "Calculus",       Creditos = 4,
-                    DepartmentID = departments.Single( s => s.Nome == "Mathematics").DepartamentoId
+                    DepartamentoId = departments.Single( s => s.Nome == "Mathematics").DepartamentoId
                 },
                 new Curso {CursoId = 3141, Titulo = "Trigonometry",   Creditos = 4,
-                    DepartmentID = departments.Single( s => s.Nome == "Mathematics").DepartamentoId
+                    DepartamentoId = departments.Single( s => s.Nome == "Mathematics").DepartamentoId
                 },
                 new Curso {CursoId = 2021, Titulo = "Composition",    Creditos = 3,
-                    DepartmentID = departments.Single( s => s.Nome == "English").DepartamentoId
+                    DepartamentoId = departments.Single( s => s.Nome == "English").DepartamentoId
                 },
                 new Curso {CursoId = 2042, Titulo = "Literature",     Creditos = 4,
-                    DepartmentID = departments.Single( s => s.Nome == "English").DepartamentoId
+                    DepartamentoId = departments.Single( s => s.Nome == "English").DepartamentoId
                 },
             };
 
