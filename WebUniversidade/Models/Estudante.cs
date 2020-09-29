@@ -5,18 +5,8 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace WebUniversidade.Models
 {
-    public class Estudante
+    public class Estudante : Pessoa
     {
-        public int Id { get; set; }
-
-        [StringLength(50, MinimumLength = 3)]
-        [Required]
-        public string Nome { get; set; }
-
-        [StringLength(50, MinimumLength = 3)]
-        [Required]
-        public string Sobrenome { get; set; }
-
         [Display(Name = "Data de Registro")]
         [DataType(DataType.Date)]
         [Column("DataEntrada")]
@@ -25,10 +15,5 @@ namespace WebUniversidade.Models
 
         public ICollection<CursoEstudante> CursoEstudantes { get; set; }
 
-        [Display(Name ="Nome Completo")]
-        public string NomeCompleto
-        {
-            get { return Nome + ", " + Sobrenome; }
-        }
     }
 }

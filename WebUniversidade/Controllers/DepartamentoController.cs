@@ -34,7 +34,12 @@ namespace WebUniversidade.Controllers
                 return NotFound(new { message = "Codigo nao encontrado!!" });
             }
 
-            var departamento = await Contexto.Departamentos.AsNoTracking().FirstOrDefaultAsync(x => x.DepartamentoId == id);
+            //var departamento = await Contexto.Departamentos.AsNoTracking().FirstOrDefaultAsync(x => x.DepartamentoId == id);
+            // Apenas outra forma de fazer a consulta utilizando sql
+            string query = "SELECT * FROM Departamento WHERE DepartamentoId = {0}";
+
+            Departamento departamento = await Contexto.Departamentos.FromSqlRaw(query, id)
+                .Include(a => a.Administrador).AsNoTracking().FirstOrDefaultAsync();
 
             if (departamento == null)
             {
