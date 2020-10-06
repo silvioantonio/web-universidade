@@ -10,6 +10,7 @@ namespace WebUniversidade.Controllers
 {
     public class CursoController : Controller
     {
+
         private Contexto Contexto { get; }
 
         public CursoController(Contexto contexto)
